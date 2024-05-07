@@ -1,9 +1,7 @@
-#!/bin/sh
 
-set -e
+GITHUB_URL=https://github.com/yevgen-grytsay/git-hooks
 
-install() {
-
+install_gitleaks() {
     UNAME=$(uname)
 
     if [[ $UNAME == "Linux" ]]; then
@@ -32,7 +30,7 @@ install() {
     release_file="gitleaks_${release_version}_${os}_${arch}.zip"
     release_url="https://github.com/gitleaks/gitleaks/releases/download/v${release_version}/${release_file}"
     local_archive="$HOME/${release_file}"
-    
+
     echo "[INFO] Downloading file ${release_url}"
     curl -o "${local_archive}" -L ${release_url}
 
@@ -58,15 +56,18 @@ install() {
     fi
 }
 
+() {
+    if [[ !$(git rev-parse --git-dir) ]]; then
+        echo "[ERROR] Not inside git repository"
+        exit 1
+    fi
 
-# echo $UNAME
+    mkdir -p "./.git/hooks/pre-commit"
 
-if [[ $(which gitleaks) ]]; then
-    echo "[OK] gitleaks installation found"
-else
-    install
-fi
+    curl "$GITHUB_URL/"
+}
 
 
-gitleaks detect --source . -v --no-git
-# gitleaks detect --source . -v
+install_gitleaks
+
+install_hook
