@@ -2,7 +2,6 @@
 #!/bin/sh
 
 set -e
-set -e
 
 gitleaks_release_version="8.18.2"
 gitleaks_release_file="gitleaks_${gitleaks_release_version}_${os}_${arch}.zip"
