@@ -1,5 +1,6 @@
+#!/bin/sh
 
-GITHUB_URL=https://github.com/yevgen-grytsay/git-hooks
+set -e
 
 gitleaks_release_version="8.18.2"
 gitleaks_release_file="gitleaks_${gitleaks_release_version}_${os}_${arch}.zip"
@@ -65,8 +66,8 @@ install_hook() {
 
     mkdir -p "./.git/hooks/pre-commit"
 
-    file_name="pre-commit-gitleaks.sh"
-    curl "https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/main/pre-commit-gitleaks/${file_name}"
+    file_name="hook.sh"
+    curl "https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/main/pre-commit-gitleaks/$file_name"
     mv "$file_name" "./.git/hooks/pre-commit/pre-commit-gitleaks"
 }
 
