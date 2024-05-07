@@ -1,23 +1,22 @@
 #!/bin/sh
-#!/bin/sh
 
 set -e
 
 gitleaks_release_version="8.18.2"
-gitleaks_release_file="gitleaks_${gitleaks_release_version}_${os}_${arch}.zip"
-gitleaks_release_url="https://github.com/gitleaks/gitleaks/releases/download/v${gitleaks_release_version}/${gitleaks_release_file}"
 
-script_dir=$(dirname $0)
+
+# script_dir=$(dirname $0)
+script_dir=$(pwd)
 
 install_gitleaks() {
     UNAME=$(uname)
 
     if [[ $UNAME == "Linux" ]]; then
         os="linux"
-        echo "[OK] OS detected: Linux"
+        # echo "[OK] OS detected: Linux"
     elif [[ $UNAME =~ (CYGWIN.*)|(MINGW.*) ]]; then
         os="windows"
-        echo "[OK] OS detected: Windows"
+        # echo "[OK] OS detected: Windows"
     else
         echo "[ERROR] Unsupported OS"
         exit 1
@@ -34,10 +33,14 @@ install_gitleaks() {
         # arm)    dpkg --print-architecture | grep -q "arm64" && arch="arm64" || arch="arm" ;;
     esac
 
+    echo "[INFO] Platform detected (arch=$arch, os=$os)"
+
+    gitleaks_release_file="gitleaks_${gitleaks_release_version}_${os}_${arch}.zip"
+    gitleaks_release_url="https://github.com/gitleaks/gitleaks/releases/download/v${gitleaks_release_version}/${gitleaks_release_file}"
     local_archive="$HOME/${gitleaks_release_file}"
 
     echo "[INFO] Downloading file ${gitleaks_release_url}"
-    curl -o "${local_archive}" -L ${gitleaks_release_url}
+    curl -o "${local_archive}" -Ls ${gitleaks_release_url}
 
     if [[ $os == "windows" ]]; then
         unarch_dir="${LOCALAPPDATA}/gitleaks_${gitleaks_release_version}_${os}_${arch}"
