@@ -1,10 +1,14 @@
 #!/bin/sh
+#!/bin/sh
 
+set -e
 set -e
 
 gitleaks_release_version="8.18.2"
 gitleaks_release_file="gitleaks_${gitleaks_release_version}_${os}_${arch}.zip"
 gitleaks_release_url="https://github.com/gitleaks/gitleaks/releases/download/v${gitleaks_release_version}/${gitleaks_release_file}"
+
+script_dir=$(dirname $0)
 
 install_gitleaks() {
     UNAME=$(uname)
@@ -27,7 +31,7 @@ install_gitleaks() {
         x86_64) arch="x64" ;;
         *)
             echo "[ERROR] Unsupported architecture"
-            exit 1
+            exit 1 ;;
         # arm)    dpkg --print-architecture | grep -q "arm64" && arch="arm64" || arch="arm" ;;
     esac
 
@@ -59,19 +63,30 @@ install_gitleaks() {
 }
 
 install_hook() {
-    if [[ !$(git rev-parse --git-dir) ]]; then
+
+    if [[ -z $(git rev-parse --git-dir) ]]; then
         echo "[ERROR] Not inside git repository"
         exit 1
     fi
 
-    mkdir -p "./.git/hooks/pre-commit"
+    hooks_dir="$script_dir/.git/hooks"
+    hook_file="$hooks_dir/pre-commit"
+    if [[ -d $hook_file ]]; then
+        echo "[ERROR] Can not install script: directory with conflicting name already exists: $hook_file"
+        exit 1
+    fi
 
     file_name="hook.sh"
-    curl "https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/main/pre-commit-gitleaks/$file_name"
-    mv "$file_name" "./.git/hooks/pre-commit/pre-commit-gitleaks"
+    curl -sLf -o $file_name "https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/main/pre-commit-gitleaks/$file_name"
+    mv -i "$file_name" "$hook_file"
 }
 
 
-install_gitleaks
+if [[ $(which gitleaks) ]]; then
+    echo "[INFO] found gitleak installation"
+else
+    echo "[INFO] installing gitleak..."
+    install_gitleaks
+fi
 
 install_hook
