@@ -1,6 +1,10 @@
 
 GITHUB_URL=https://github.com/yevgen-grytsay/git-hooks
 
+gitleaks_release_version="8.18.2"
+gitleaks_release_file="gitleaks_${gitleaks_release_version}_${os}_${arch}.zip"
+gitleaks_release_url="https://github.com/gitleaks/gitleaks/releases/download/v${gitleaks_release_version}/${gitleaks_release_file}"
+
 install_gitleaks() {
     UNAME=$(uname)
 
@@ -26,25 +30,22 @@ install_gitleaks() {
         # arm)    dpkg --print-architecture | grep -q "arm64" && arch="arm64" || arch="arm" ;;
     esac
 
-    release_version="8.18.2"
-    release_file="gitleaks_${release_version}_${os}_${arch}.zip"
-    release_url="https://github.com/gitleaks/gitleaks/releases/download/v${release_version}/${release_file}"
-    local_archive="$HOME/${release_file}"
+    local_archive="$HOME/${gitleaks_release_file}"
 
-    echo "[INFO] Downloading file ${release_url}"
-    curl -o "${local_archive}" -L ${release_url}
+    echo "[INFO] Downloading file ${gitleaks_release_url}"
+    curl -o "${local_archive}" -L ${gitleaks_release_url}
 
     if [[ $os == "windows" ]]; then
-        unarch_dir="${LOCALAPPDATA}/gitleaks_${release_version}_${os}_${arch}"
+        unarch_dir="${LOCALAPPDATA}/gitleaks_${gitleaks_release_version}_${os}_${arch}"
         bin_dir="$HOME/bin"
 
-        unzip -o "$HOME/${release_file}" -d $unarch_dir
+        unzip -o "$HOME/${gitleaks_release_file}" -d $unarch_dir
         mkdir -p "$bin_dir"
         mv "${unarch_dir}/gitleaks.exe" "$bin_dir/gitleaks.exe"
         rm -rf "$unarch_dir"
         rm "$local_archive"
     elif [[ $os == "linux" ]]; then
-        unarch_dir="$HOME/gitleaks_${release_version}_${os}_${arch}"
+        unarch_dir="$HOME/gitleaks_${gitleaks_release_version}_${os}_${arch}"
         bin_dir="/usr/local/bin"
 
         tar -xvf "$local_archive" -d $unarch_dir
@@ -56,7 +57,7 @@ install_gitleaks() {
     fi
 }
 
-() {
+install_hook() {
     if [[ !$(git rev-parse --git-dir) ]]; then
         echo "[ERROR] Not inside git repository"
         exit 1
@@ -64,7 +65,9 @@ install_gitleaks() {
 
     mkdir -p "./.git/hooks/pre-commit"
 
-    curl "$GITHUB_URL/"
+    file_name="pre-commit-gitleaks.sh"
+    curl "https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/main/pre-commit-gitleaks/${file_name}"
+    mv "$file_name" "./.git/hooks/pre-commit/pre-commit-gitleaks"
 }
 
 
