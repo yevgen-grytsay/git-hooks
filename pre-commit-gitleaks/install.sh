@@ -142,4 +142,7 @@ if [[ -n "$ENABLE_HOOK" ]]; then
             git config "$GIT_CONFIG_KEY" false
             echo "[INFO] Hook disabled" ;;
     esac
+else
+    git config "$GIT_CONFIG_KEY" true
+    echo "[INFO] Hook enabled" ;;
 fi
