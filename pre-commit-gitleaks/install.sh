@@ -4,7 +4,7 @@ set -e
 
 ENABLE_HOOK="$1"
 
-HOOK_VERSION="v1.0.2"
+HOOK_VERSION="v1.0.3"
 HOOK_FILE_NAME="hook.sh"
 HOOK_FILE_URL="https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/$HOOK_VERSION/pre-commit-gitleaks/$HOOK_FILE_NAME"
 GIT_CONFIG_KEY="yevhenhrytsai.pre-commit-gitleaks"
@@ -61,7 +61,7 @@ install_gitleaks() {
     local local_archive="$HOME/${gitleaks_release_file}"
 
     echo "[INFO] Downloading file ${gitleaks_release_url}"
-    curl -o "${local_archive}" -Ls --fail --show-error ${gitleaks_release_url}
+    curl -o "${local_archive}" -sSfL --fail --show-error ${gitleaks_release_url}
 
     if [[ $os == "windows" ]]; then
         local unarch_dir="${LOCALAPPDATA}/gitleaks_${GITLEAKS_RELEASE_VERSION}_${os}_${arch}"
@@ -110,7 +110,7 @@ install_hook() {
 
     echo "[INFO] Installing hook version $HOOK_VERSION"
 
-    curl -o "$HOOK_FILE_NAME" -Ls --fail --show-error "$HOOK_FILE_URL"
+    curl -o "$HOOK_FILE_NAME" -sSfL --fail --show-error "$HOOK_FILE_URL"
     mv -i "$HOOK_FILE_NAME" "$hook_file"
     chmod +x "$hook_file"
 }
@@ -144,5 +144,5 @@ if [[ -n "$ENABLE_HOOK" ]]; then
     esac
 else
     git config "$GIT_CONFIG_KEY" true
-    echo "[INFO] Hook enabled" ;;
+    echo "[INFO] Hook enabled"
 fi
