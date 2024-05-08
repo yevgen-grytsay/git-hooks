@@ -19,7 +19,8 @@ curl -sSfL https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/v1.0.3/pre
 Активувати чи деактивувати хук:
 ```sh
 # First download installation script
-curl -sSfL https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/v1.0.3/pre-commit-gitleaks/install.sh
+curl -o install.sh -sSfL https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/v1.0.3/pre-commit-gitleaks/install.sh
+chmod +x ./install.sh
 
 # Then run following command to enable hook
 ./install.sh enable

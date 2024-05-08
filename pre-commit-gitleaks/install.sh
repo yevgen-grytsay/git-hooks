@@ -88,7 +88,7 @@ install_gitleaks() {
 
 install_hook_once() {
     if [[ -n $(git config "$GIT_CONFIG_KEY") ]]; then
-        echo "[INFO] Skip installation: already installed."
+        echo "[INFO] Skip hook installation: hook already installed."
         echo "[INFO]   run 'git config --unset $GIT_CONFIG_KEY; ./pre-commit-gitleaks/install.sh enable' to force installation"
     else
         install_hook
