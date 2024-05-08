@@ -11,6 +11,7 @@ Git-хук, який за допомогою утиліти [`gitleaks`](https:/
 ## `install.sh`
 Усі команди слід виконувати із директорії з git-репозиторієм.
 
+### Linux
 Щоб встановити і активувати хук, виконайте наступну команду:
 ```sh
 curl -sSfL https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/v1.0.4/pre-commit-gitleaks/install.sh | bash
@@ -27,5 +28,7 @@ chmod +x ./install.sh
 
 # Run following command to disable hook
 ./install.sh disable
-
 ```
+
+### Windows
+Встановіть консоль Git Bash і запустіть її. Виконайте кроки інсталяції, які описані в інструкції для [Linux](#linux).
