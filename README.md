@@ -13,24 +13,19 @@ Git-хук, який за допомогою утиліти [`gitleaks`](https:/
 
 Щоб встановити і активувати хук, виконайте наступну команду:
 ```sh
-curl -sSfL https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/v1.0.3/pre-commit-gitleaks/install.sh | bash
+curl -sSfL https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/v1.0.4/pre-commit-gitleaks/install.sh | bash
 ```
 
 Активувати чи деактивувати хук:
 ```sh
 # First download installation script
-curl -o install.sh -sSfL https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/v1.0.3/pre-commit-gitleaks/install.sh
+curl -o install.sh -sSfL https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/v1.0.4/pre-commit-gitleaks/install.sh
 chmod +x ./install.sh
 
 # Then run following command to enable hook
 ./install.sh enable
 
-# Run following command to enable hook
+# Run following command to disable hook
 ./install.sh disable
 
 ```
-
-<!-- 
-```sh
-git hook run pre-commit
-``` -->

@@ -4,7 +4,7 @@ set -e
 
 ENABLE_HOOK="$1"
 
-HOOK_VERSION="v1.0.3"
+HOOK_VERSION="v1.0.4"
 HOOK_FILE_NAME="hook.sh"
 HOOK_FILE_URL="https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/$HOOK_VERSION/pre-commit-gitleaks/$HOOK_FILE_NAME"
 GIT_CONFIG_KEY="yevhenhrytsai.pre-commit-gitleaks"
