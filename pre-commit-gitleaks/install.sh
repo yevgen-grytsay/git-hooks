@@ -102,8 +102,8 @@ install_hook() {
 
     local hooks_dir="$script_dir/.git/hooks"
     local hook_file="$hooks_dir/pre-commit"
-    if [[ -d $hook_file ]]; then
-        echo "[ERROR] Can not install script: directory with conflicting name already exists: $hook_file"
+    if [[ -e $hook_file ]]; then
+        echo "[ERROR] Can not install script: file or directory with conflicting name already exists: $hook_file"
         exit 1
     fi
 
