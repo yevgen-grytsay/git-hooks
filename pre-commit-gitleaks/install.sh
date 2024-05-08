@@ -4,12 +4,13 @@ set -e
 
 ENABLE_HOOK="$1"
 
+HOOK_VERSION="v1.0.2"
 HOOK_FILE_NAME="hook.sh"
-HOOK_FILE_URL="https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/v1.0.1/pre-commit-gitleaks/$HOOK_FILE_NAME"
+HOOK_FILE_URL="https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/$HOOK_VERSION/pre-commit-gitleaks/$HOOK_FILE_NAME"
 GIT_CONFIG_KEY="yevhenhrytsai.pre-commit-gitleaks"
 
 
-gitleaks_release_version="8.18.2"
+GITLEAKS_RELEASE_VERSION="8.18.2"
 
 
 # script_dir=$(dirname $0)
@@ -55,15 +56,15 @@ install_gitleaks() {
 
     echo "[INFO] Platform detected (arch=$arch, os=$os)"
 
-    local gitleaks_release_file="gitleaks_${gitleaks_release_version}_${os}_${arch}${ext}"
-    local gitleaks_release_url="https://github.com/gitleaks/gitleaks/releases/download/v${gitleaks_release_version}/${gitleaks_release_file}"
+    local gitleaks_release_file="gitleaks_${GITLEAKS_RELEASE_VERSION}_${os}_${arch}${ext}"
+    local gitleaks_release_url="https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_RELEASE_VERSION}/${gitleaks_release_file}"
     local local_archive="$HOME/${gitleaks_release_file}"
 
     echo "[INFO] Downloading file ${gitleaks_release_url}"
     curl -o "${local_archive}" -Ls --fail --show-error ${gitleaks_release_url}
 
     if [[ $os == "windows" ]]; then
-        local unarch_dir="${LOCALAPPDATA}/gitleaks_${gitleaks_release_version}_${os}_${arch}"
+        local unarch_dir="${LOCALAPPDATA}/gitleaks_${GITLEAKS_RELEASE_VERSION}_${os}_${arch}"
         local bin_dir="$HOME/bin"
 
         unzip -o "$HOME/${gitleaks_release_file}" -d $unarch_dir
@@ -72,7 +73,7 @@ install_gitleaks() {
         rm -rf "$unarch_dir"
         rm "$local_archive"
     elif [[ $os == "linux" ]]; then
-        local unarch_dir="$HOME/gitleaks_${gitleaks_release_version}_${os}_${arch}"
+        local unarch_dir="$HOME/gitleaks_${GITLEAKS_RELEASE_VERSION}_${os}_${arch}"
         local bin_dir="/usr/local/bin"
 
         mkdir $unarch_dir
@@ -106,6 +107,8 @@ install_hook() {
         echo "[ERROR] Can not install script: file or directory with conflicting name already exists: $hook_file"
         exit 1
     fi
+
+    echo "[INFO] Installing hook version $HOOK_VERSION"
 
     curl -o "$HOOK_FILE_NAME" -Ls --fail --show-error "$HOOK_FILE_URL"
     mv -i "$HOOK_FILE_NAME" "$hook_file"
