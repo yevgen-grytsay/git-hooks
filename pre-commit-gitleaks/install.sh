@@ -17,9 +17,9 @@ script_dir=$(pwd)
 
 install_gitleaks_once() {
     if [[ $(which gitleaks) ]]; then
-        echo "[INFO] found gitleak installation"
+        echo "[INFO] found gitleaks installation"
     else
-        echo "[INFO] installing gitleak..."
+        echo "[INFO] installing gitleaks..."
         install_gitleaks
     fi
 }
