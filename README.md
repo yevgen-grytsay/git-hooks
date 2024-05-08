@@ -13,26 +13,26 @@ Git-хук, який за допомогою утиліти [`gitleaks`](https:/
 
 Щоб встановити і активувати хук, виконайте наступну команду:
 ```sh
-curl -sfL https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/v1.0.1/pre-commit-gitleaks/install.sh | bash -- enable
+curl -sfL https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/v1.0.2/pre-commit-gitleaks/install.sh | bash -- enable
 ```
 
 Встановити без активації:
 ```sh
-curl -sfL https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/v1.0.1/pre-commit-gitleaks/install.sh | bash
+curl -sfL https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/v1.0.2/pre-commit-gitleaks/install.sh | bash
 ```
 
 Активувати хук:
 ```sh
 install.sh enable
 # OR
-curl -sfL https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/v1.0.1/pre-commit-gitleaks/install.sh | bash -- enable
+curl -sfL https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/v1.0.2/pre-commit-gitleaks/install.sh | bash -- enable
 ```
 
 Деактивувати хук:
 ```sh
 install.sh disable
 # OR
-curl -sfL https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/v1.0.1/pre-commit-gitleaks/install.sh | bash -- disable
+curl -sfL https://raw.githubusercontent.com/yevgen-grytsay/git-hooks/v1.0.2/pre-commit-gitleaks/install.sh | bash -- disable
 ```
 
 <!-- 
